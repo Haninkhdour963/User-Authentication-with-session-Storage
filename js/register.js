@@ -9,6 +9,7 @@ document.getElementById('registerForm').addEventListener('submit', function (e) 
     sessionStorage.setItem('username', username);
     sessionStorage.setItem('email', email);
     sessionStorage.setItem('password', password);
+    sessionStorage.setItem('isLoggedIn', 'true');
     sessionStorage.setItem('isAdmin', 'false'); // Users are not admins
 
     alert('Registration successful! ');
