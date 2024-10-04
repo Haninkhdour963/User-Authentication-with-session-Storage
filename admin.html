@@ -24,12 +24,6 @@
             background-color: #007bff;
             color: white;
         }
-        .logout-icon {
-            font-size: 1.5rem;
-        }
-        .logout-item {
-            display: none;
-        }
         .footer {
             margin-top: 20px;
             text-align: center;
@@ -41,14 +35,22 @@
         <h3 class="header-title mb-4">FoodMart Dashboard Application</h3>
         <form action="" id="form" class="mb-4">
             <div class="form-group mb-3">
-                <input type="text" id="category" class="form-control" placeholder="Enter Category" required>
+                <select id="category" class="form-control" required>
+                    <option value="">Select Category</option>
+                    <option value="Fruits">Fruits</option>
+                    <option value="Vegetables">Vegetables</option>
+                    <option value="Dairy">Dairy</option>
+                    <option value="Bakery">Bakery</option>
+                    <option value="Snacks">Snacks</option>
+                </select>
             </div>
             <div class="form-group mb-3">
                 <input type="text" id="ProductName" class="form-control" placeholder="Enter Product Name" required>
             </div>
             <div class="form-group mb-3">
-                <input type="number" id="price" class="form-control" placeholder="Enter Price" required>
+                <input type="text" id="price" class="form-control" placeholder="Enter Price" required>
             </div>
+            
             <div class="form-group mb-3">
                 <input type="text" id="image_url" class="form-control" placeholder="Enter Image URL" required>
             </div>
@@ -56,13 +58,6 @@
                 <button type="submit" id="addData" class="btn btn-primary btn-custom">Add Data</button>
                 <a href="index.html" class="btn btn-secondary btn-custom">Go To Home</a>
             </div>
-            <ul class="d-flex justify-content-end list-unstyled m-0 mt-3">
-                <li id="logoutItem" style="display: none;">
-                    <a href="#" class="logout-icon rounded-circle bg-light p-2 mx-1" id="logoutButton">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </a>
-                </li>
-            </ul>
         </form>
 
         <table class="table table-bordered">

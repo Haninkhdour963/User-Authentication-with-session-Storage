@@ -7,6 +7,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const tbody = document.querySelector('tbody');
     let editingIndex = null;
 
+    // Function to fetch data from dataPro.json
+    async function fetchData() {
+        try {
+            const response = await fetch('dataPro.json');
+            const data = await response.json();
+            sessionStorage.setItem('data', JSON.stringify(data.products));
+            renderTable();
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
     function renderTable() {
         tbody.innerHTML = '';
         const data = JSON.parse(sessionStorage.getItem('data')) || [];
@@ -15,9 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <tr>
                     <td>${item.id}</td>
                     <td>${item.category}</td>
-                    <td>${item.ProductName}</td>
-                    <td>${item.price}</td>
-                    <td><img src="${item.image_url}" alt="${item.ProductName}" style="width: 50px; height: 50px;"></td>
+                    <td>${item.name}</td>
+                    <td>${parseFloat(item.price).toFixed(2)}</td>
+                    <td><img src="${item.image_url}" alt="${item.name}" style="width: 50px; height: 50px;"></td>
                     <td>
                         <button class="btn btn-warning btn-sm" onclick="editData(${index})">Edit</button>
                         <button class="btn btn-danger btn-sm" onclick="deleteData(${index})">Delete</button>
@@ -31,17 +43,17 @@ document.addEventListener('DOMContentLoaded', () => {
     function saveData() {
         const categoryValue = category.value;
         const ProductNameValue = ProductName.value;
-        const priceValue = price.value;
+        const priceValue = parseFloat(price.value).toFixed(2);
         const image_urlValue = image_url.value;
 
         const data = JSON.parse(sessionStorage.getItem('data')) || [];
-        const newId = data.length > 0 ? data[data.length - 1].id + 1 : 1; // Generate new ID
+        const newId = data.length > 0 ? data[data.length - 1].id + 1 : 1;
 
         if (editingIndex !== null) {
-            data[editingIndex] = { id: data[editingIndex].id, category: categoryValue, ProductName: ProductNameValue, price: priceValue, image_url: image_urlValue };
+            data[editingIndex] = { id: data[editingIndex].id, category: categoryValue, name: ProductNameValue, price: priceValue, image_url: image_urlValue };
             editingIndex = null;
         } else {
-            data.push({ id: newId, category: categoryValue, ProductName: ProductNameValue, price: priceValue, image_url: image_urlValue });
+            data.push({ id: newId, category: categoryValue, name: ProductNameValue, price: priceValue, image_url: image_urlValue });
         }
         sessionStorage.setItem('data', JSON.stringify(data));
         form.reset();
@@ -52,8 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = JSON.parse(sessionStorage.getItem('data'));
         const item = data[index];
         category.value = item.category;
-        ProductName.value = item.ProductName;
-        price.value = item.price;
+        ProductName.value = item.name;
+        price.value = item.price; 
         image_url.value = item.image_url;
         editingIndex = index;
     };
@@ -70,5 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
         saveData();
     });
 
-    renderTable();
+    // Fetch and load the initial data
+    fetchData();
 });
